@@ -52,6 +52,7 @@
         页次：<asp:Label ID="lbNow" runat="server" Text="1"></asp:Label>
         /<asp:Label ID="lbTotal" runat="server" Text="1"></asp:Label>
         转<asp:TextBox ID="txtJump" Text="1" runat="server" Width="16px" onkeyup="this.value=this.value.replace(/\D/g,'')"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat ="server" ControlToValidate ="txtJump" ></asp:RequiredFieldValidator> 
         <asp:Button ID="btnJump" runat="server" Text="Go"  OnClick="btnJump_Click"/>
           <asp:Button ID="btnback" runat="server" Text="返回" PostBackUrl="~/Manager_use.aspx" />
     </div>

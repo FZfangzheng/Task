@@ -6,34 +6,53 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Manage_user_borrowbook : System.Web.UI.Page
+public partial class Books : System.Web.UI.Page
 {
-        Class2 myeditor = new Class2();
+    Class2 change = new Class2();
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        if (!IsPostBack)
+        {
+            DataBindToRepeater(1);
+        }
         try
         {
-            string name = Session["name1"].ToString();
+            if (Session["name1"].ToString() == " ")
 
-            if (!IsPostBack)//使得Page_Load只在第一次加载页面时执行
-            {
-                DataBindToRepeater(1);
-            }
+            Response.Write("<script>alert('尚未登录！');location='manager.aspx'</script>");
+
+            string name = Session["name1"].ToString();
         }
         catch (Exception )
         {
-            Response.Write("<script>alert('尚未登录！');location='Login.aspx'</script>");
+            Response.Write("<script>alert('尚未登录！');location='manager.aspx'</script>");
         }
+    }
+    protected void RptBook_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+
+        if (e.CommandName == "Delete")
+        {
+            int id = Convert.ToInt32(e.CommandArgument.ToString());
+
+            string sql = "delete from Book where id='" + id + "'";
+
+            change.store_change(sql);
+
+            Response.Write("<script>alert('删除成功！');location='Books.aspx'</script>");
+
+
+        }
+
     }
     void DataBindToRepeater(int currentPage)
     {
-        int id = Convert.ToInt32(Request.QueryString["id"]);
-
-        string sql = "select * from Borrowbook where id='" + id + "'";//查询id下借阅信息
+        string sql = "select * from Book";
 
         DataTable dt = new DataTable();
 
-        dt = myeditor.select(sql);
+        dt = change.select(sql);
 
         PagedDataSource pds = new PagedDataSource();
 
@@ -75,11 +94,14 @@ public partial class Manage_user_borrowbook : System.Web.UI.Page
     }
     protected void btnJump_Click(object sender, EventArgs e)
     {
-        if (Convert.ToInt32(txtJump.Text) <= Convert.ToInt32(lbTotal.Text) && Convert.ToInt32(txtJump.Text) >= 1)
+        if (RequiredFieldValidator1.IsValid == true)
         {
-            lbNow.Text = txtJump.Text;
+            if (Convert.ToInt32(txtJump.Text) <= Convert.ToInt32(lbTotal.Text) && Convert.ToInt32(txtJump.Text) >= 1)
+            {
+                lbNow.Text = txtJump.Text;
 
-            DataBindToRepeater(Convert.ToInt32(txtJump.Text));
+                DataBindToRepeater(Convert.ToInt32(txtJump.Text));
+            }
         }
     }
     protected void btnUp_Click(object sender, EventArgs e)

@@ -93,11 +93,14 @@ public partial class Users : System.Web.UI.Page
     }
     protected void btnJump_Click(object sender, EventArgs e)
     {
-        if (Convert.ToInt32(txtJump.Text) <= Convert.ToInt32(lbTotal.Text) && Convert.ToInt32(txtJump.Text) >= 1)
+        if (RequiredFieldValidator1.IsValid == true)
         {
-            lbNow.Text = txtJump.Text;
+            if (Convert.ToInt32(txtJump.Text) <= Convert.ToInt32(lbTotal.Text) && Convert.ToInt32(txtJump.Text) >= 1)
+            {
+                lbNow.Text = txtJump.Text;
 
-            DataBindToRepeater(Convert.ToInt32(txtJump.Text));
+                DataBindToRepeater(Convert.ToInt32(txtJump.Text));
+            }
         }
     }
     protected void btnUp_Click(object sender, EventArgs e)
