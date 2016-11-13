@@ -50,7 +50,7 @@ public partial class Welcome : System.Web.UI.Page
 
                     for(i=0;i<count;i++)
                     {
-                        if(Convert.ToDateTime ( dt2.Rows[0][i].ToString ())<Convert .ToDateTime(time))
+                        if(Convert.ToDateTime ( dt2.Rows[i][0].ToString ())<Convert .ToDateTime(time))
                         {
                             Response.Write("<script>alert('有书到期未还，请迅速归还！')</script>");
 
