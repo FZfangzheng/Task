@@ -37,47 +37,53 @@ public partial class Selectbook : System.Web.UI.Page
 
         if (e.CommandName == "Borrow")
         {
+            if (Convert.ToInt32(Session["time"]) == 1)
 
-            int id = Convert.ToInt32(e.CommandArgument.ToString());
-
-            string time = DateTime.Now.ToString();
-
-            DateTime now = DateTime.Now;
-
-            DateTime endtime = now.AddMonths(1);
-
-            string sql1 = "select * from Book where id='" + id + "'";
-
-            DataTable dt = new DataTable();
-
-            dt = myborrow.select(sql1);
-
-            int count1 = Convert.ToInt32(dt.Rows[0][3].ToString());
-
-            count1 = count1 - 1;
-
-            if (count1 >= 0)
-            {
-                string count2 = Convert.ToString(count1);
-
-                string sql2 = "update Book set count='" + count2 + "' where id='" + id + "'";
-
-                myborrow.store_change(sql2);
-
-                string bookname = dt.Rows[0][1].ToString();
-
-                string author = dt.Rows[0][2].ToString();
-
-                string id1 = Session["id"].ToString();
-
-                string sql3 = "insert into Borrowbook values('" + id1 + "','" + bookname + "','" + author + "','" + time + "','" + endtime + "')";
-
-                myborrow.store_change(sql3);
-
-                Response.Write("<script>alert('借阅成功！');location='Selectbook.aspx'</script>");
-            }
+                Response.Write("<script>alert('有书到期未还，请迅速归还！')</script>");
             else
-                Response.Write("<script>alert('数量不足，借阅失败！');location='Selectbook.aspx'</script>");
+
+            {
+                int id = Convert.ToInt32(e.CommandArgument.ToString());
+
+                string time = DateTime.Now.ToString();
+
+                DateTime now = DateTime.Now;
+
+                DateTime endtime = now.AddMonths(1);
+
+                string sql1 = "select * from Book where id='" + id + "'";
+
+                DataTable dt = new DataTable();
+
+                dt = myborrow.select(sql1);
+
+                int count1 = Convert.ToInt32(dt.Rows[0][3].ToString());
+
+                count1 = count1 - 1;
+
+                if (count1 >= 0)
+                {
+                    string count2 = Convert.ToString(count1);
+
+                    string sql2 = "update Book set count='" + count2 + "' where id='" + id + "'";
+
+                    myborrow.store_change(sql2);
+
+                    string bookname = dt.Rows[0][1].ToString();
+
+                    string author = dt.Rows[0][2].ToString();
+
+                    string id1 = Session["id"].ToString();
+
+                    string sql3 = "insert into Borrowbook values('" + id1 + "','" + bookname + "','" + author + "','" + time + "','" + endtime + "')";
+
+                    myborrow.store_change(sql3);
+
+                    Response.Write("<script>alert('借阅成功！');location='Selectbook.aspx'</script>");
+                }
+                else
+                    Response.Write("<script>alert('数量不足，借阅失败！');location='Selectbook.aspx'</script>");
+            }
         }
 
 

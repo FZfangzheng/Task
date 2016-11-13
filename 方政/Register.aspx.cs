@@ -25,9 +25,15 @@ public partial class Register : System.Web.UI.Page
 
         string phonenumble = txtphonenumble.Text;
 
+        string question = dropProv.SelectedValue;
+
+        string answer = txtanswer.Text;
+
         string sql = "insert into login2 values('" + username + "','" + password + "','" + phonenumble + "','"+nickname+"')";
 
         string sql1 = "select * from login2 where username='" + username + "'";
+
+        string sql2 = "insert into Question(username,question,answer) values('" + username + "','" + question + "','" + answer + "')";
 
         DataTable table1 = myregister.select(sql1);
 
@@ -54,6 +60,8 @@ public partial class Register : System.Web.UI.Page
                             if (table1 .Rows .Count  == 0)
                             {
                                 myregister.store_change(sql);
+
+                                myregister.store_change(sql2);
 
                                 Response.Write("<script>alert('注册成功！');location='Login.aspx'</script>");
                             }

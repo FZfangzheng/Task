@@ -62,9 +62,26 @@
               <asp:TextBox ID ="txtphonenumble" runat ="server" onkeyup="this.value=this.value.replace(/\D/g,'')"></asp:TextBox>
           </td>
         </tr>
-
         <tr>
-    </tr>
+            <td>
+                密保问题：
+            </td>
+            <td>
+                
+            <asp:DropDownList ID="dropProv" runat="server" Width="147px">
+            <asp:ListItem> 你父亲的名字？</asp:ListItem>
+            <asp:ListItem Selected="True">你的学号</asp:ListItem>
+            <asp:ListItem>你母亲的名字</asp:ListItem>
+        </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td>答案</td>
+            <td><asp:TextBox ID="txtanswer" runat="server" ></asp:TextBox></td>
+        </tr>
+             
+
+
     <tr>
         <td>
             </td>

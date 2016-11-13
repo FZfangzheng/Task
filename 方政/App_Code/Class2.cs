@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 /// </summary>
 public class Class2
 {
-    string str = @"server=DESKTOP-34MDJJN;Integrated Security=SSPI;database=fangsiji;";
+    string str = @"server=DESKTOP-34MDJJN;Integrated Security=SSPI;database=library;";
     public Class2()
     {
         //

@@ -34,16 +34,31 @@ public partial class Welcome : System.Web.UI.Page
 
                     Session["id"] = id;
 
+                    string sql3 = "update Question set id='"+id+"' where username='"+username+"'";
+
+                    myselect.store_change(sql3);
+
                     string time = DateTime.Now.ToString();
 
-                    string sql2 = "select * from Borrowbook where id='" + id + "' and endtime='" + time + "'";
+                    string sql2 = "select endtime from Borrowbook where id='" + id + "'";
 
                     DataTable dt2 = myselect.select(sql2);
 
-                    if(dt2.Rows.Count >0)
+                    int count = dt2.Rows.Count;
+
+                    int i;
+
+                    for(i=0;i<count;i++)
                     {
-                        Response.Write("<script>alert('有书到期未还，请迅速归还！')</script>");
-                    }           
+                        if(Convert.ToDateTime ( dt2.Rows[0][i].ToString ())<Convert .ToDateTime(time))
+                        {
+                            Response.Write("<script>alert('有书到期未还，请迅速归还！')</script>");
+
+                            Session["time"] = 1;
+
+                            break;
+                        }
+                    }
                 }
             }
                 else
